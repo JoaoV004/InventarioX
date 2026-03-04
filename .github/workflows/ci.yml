@@ -1,0 +1,49 @@
+name: CI - Back && Front
+
+on:
+  push:
+  pull_request:
+
+jobs:
+
+  frontend:
+    name: Build Frontend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: front/package-lock.json
+
+      - name: Install dependencies
+        working-directory: front
+        run: npm ci
+
+      - name: Build frontend
+        working-directory: front
+        run: npm run build
+
+  backend:
+    name: Build Backend
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: 17
+          cache: maven
+
+      - name: Build with Maven
+        working-directory: back
+        run: mvn clean verify
