@@ -45,5 +45,5 @@ jobs:
           cache: maven
 
       - name: Build with Maven
-        working-directory: back
+        working-directory: backend
         run: mvn clean verify
