@@ -32,6 +32,9 @@ jobs:
   backend:
     name: Build Backend
     runs-on: ubuntu-latest
+    env:
+      username: "root"
+      password: "Urubu100"
 
     steps:
       - name: Checkout repository
